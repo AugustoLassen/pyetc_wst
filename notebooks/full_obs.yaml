@@ -1,0 +1,51 @@
+# Instrument
+INS: ifs
+CH: red
+
+# Exposure and target SNR
+DIT: 600
+NDIT: 3
+SNR: 5
+Lam_Ref: 8000
+
+# Observing conditions
+SEE: 0.8
+AM: 1.2
+PWV: 3.5
+FLI: 0
+SKYCALC: false
+MOON_SEP: 45
+GLAO: false
+
+# Continuum source calibrated to a magnitude
+Obj_SED: template
+SED_Name: Pickles_A0V
+OBJ_MAG: 22
+MAG_SYS: AB
+MAG_FIL: rSDSS
+Z: 0
+BB_Temp: 9000
+PL_Index: -2
+
+# Line-source fields, unused for this continuum example
+SEL_FLUX: 5.0e-17
+SEL_CWAV: 8000
+SEL_FWHM: 5
+
+# Spatial model and coadds
+Obj_Spat_Dis: ps
+IMA: moffat
+IMA_FWHM: 0.8
+IMA_BETA: 2.8
+Sersic_Reff: 1.0
+Sersic_Ind: 2.0
+COADD_WL: 1
+COADD_XY: best
+
+# Optional wavelength-window target mode
+SNR_RANGE: false
+LAM_WIN1: 7500
+LAM_WIN2: 8500
+
+# MOS-only field; harmless for IFS
+OBJ_FIB_DISP: 0
