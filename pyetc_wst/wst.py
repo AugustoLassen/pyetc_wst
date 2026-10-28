@@ -177,12 +177,12 @@ class WST(ETC):
         )
 
         # ------- IFS -----------
-        self.ifs = {} 
-        self.ifs['channels'] = ['blue', 'red']
+        self.ifs = {'channels': ['blue', 'red']}
+
         # IFS blue channel
         chan = 'blue'
         self.ifs[chan] = dict(desc = self.throughput_model_desc,
-                      version = self.throughput_model_version,
+                              version = self.throughput_model_version,
                               type = 'IFS',
                               iq_fwhm_tel = self.tel['iq_fwhm_ins']['ifs'], # fwhm PSF of telescope
                               iq_fwhm_ins = 0.13, # fwhm PSF of instrument, previously 0.30, updated on 03/03/2026, this probably considers also the detector (charge diffusion)
@@ -192,37 +192,39 @@ class WST(ETC):
                               lbda1 = 3717, # starting wavelength in Angstroem
                               lbda2 = 6382, # end wavelength in Angstroem
                               lsfpix = 2.5, # LSF in spectel, previously 3.0, updated on 03/03/2026 ( * * * check)
-                              ron = 1.0 * np.sqrt(2), # readout noise (e-) # squared sum for the 2x1 binning
+                              ron = float(1.0 * np.sqrt(2)), # readout noise (e-) # squared sum for the 2x1 binning
                               dcurrent = 1.0 * 2, # dark current (e-/pixel/h) # sum for the 2x1 binning                                
                               )
-        if not skip_dataload:
-            get_data(self.ifs, chan, 'ifs', SKYDIR, self.throughput_dir)
-
+        
         # IFS red channel
         chan = 'red'
         self.ifs[chan] = dict(desc=self.throughput_model_desc,
-                       version = self.throughput_model_version,
-                               type='IFS',
-                               iq_fwhm_tel = self.tel['iq_fwhm_ins']['ifs'], # fwhm PSF of telescope
-                               iq_fwhm_ins = 0.13, # fwhm PSF of instrument, previously 0.30, updated on 03/03/2026, this probably considers also the detector (charge diffusion)
-                               iq_beta = 2.80, # beta PSF of telescope + instrument (non-AO Moffat)
-                               spaxel_size = 0.25, # spaxel size in arcsec ( * * * check for the binning 2x1, could be 0.125)
-                               dlbda = 0.64, # Angstroem/pixel, previously 0.67, updated on 03/03/2026
-                               lbda1 = 6217, # starting wavelength in Angstroem
-                               lbda2 = 9782, # end wavelength in Angstroem
-                               lsfpix = 2.5, # LSF in spectel, previously 3.0, updated on 03/03/2026 ( * * * check)
-                               ron = 1.0 * np.sqrt(2), # readout noise (e-) # squared sum for the 2x1 binning
-                               dcurrent = 1.0 * 2, # dark current (e-/pixel/h) # sum for the 2x1 binning   
-                               )
+                              version = self.throughput_model_version,
+                              type='IFS',
+                              iq_fwhm_tel = self.tel['iq_fwhm_ins']['ifs'], # fwhm PSF of telescope
+                              iq_fwhm_ins = 0.13, # fwhm PSF of instrument, previously 0.30, updated on 03/03/2026, this probably considers also the detector (charge diffusion)
+                              iq_beta = 2.80, # beta PSF of telescope + instrument (non-AO Moffat)
+                              spaxel_size = 0.25, # spaxel size in arcsec ( * * * check for the binning 2x1, could be 0.125)
+                              dlbda = 0.64, # Angstroem/pixel, previously 0.67, updated on 03/03/2026
+                              lbda1 = 6217, # starting wavelength in Angstroem
+                              lbda2 = 9782, # end wavelength in Angstroem
+                              lsfpix = 2.5, # LSF in spectel, previously 3.0, updated on 03/03/2026 ( * * * check)
+                              ron = 1.0 * np.sqrt(2), # readout noise (e-) # squared sum for the 2x1 binning
+                              dcurrent = 1.0 * 2, # dark current (e-/pixel/h) # sum for the 2x1 binning   
+                              )
+
+        # Load sky and throughput data for the IFS channels if skip_dataload is False
         if not skip_dataload:
-            get_data(self.ifs, chan, 'ifs', SKYDIR, self.throughput_dir)
+            for channel in self.ifs['channels']:
+                get_data(self.ifs, channel, 'ifs', SKYDIR, self.throughput_dir)
               
         # # --------- MOSLR-VIS 4 channels 6k CCD -------------
         
         # # # update with these values
         # # # https://stfc365.sharepoint.com/:w:/r/sites/Wide-FieldSpectroscopicTelescope/_layouts/15/Doc.aspx?sourcedoc=%7B88FA295F-6BE1-4C0E-8885-1856DE7B8383%7D&file=MOS-LR%20ETCinputs_v02.docx&action=default&mobileredirect=true
         self.moslr = {} 
-        self.moslr['channels'] = ['blue', 'green', 'yellow', 'red']       
+        self.moslr['channels'] = ['blue', 'green', 'yellow', 'red']
+        
         # MOS-LR blue channel 
         chan = self.moslr['channels'][0]
         self.moslr[chan] = dict(desc=self.throughput_model_desc,
