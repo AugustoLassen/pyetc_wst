@@ -402,7 +402,7 @@ class ETC:
                     "%s: wavelength step is not constant (min %.6g, max %.6g nm)",
                     os.path.basename(fname), dlam.min(), dlam.max())
 
-            step  = 10. * dlam.mean()
+            step  = 10. * (tab['lam'][1] - tab['lam'][0])
             wave  = WaveCoord(cdelt=step, crval=start, cunit=u.angstrom)
 
             sky_data.append(dict(moon=f[0],
