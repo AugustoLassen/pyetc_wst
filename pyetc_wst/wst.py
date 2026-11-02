@@ -32,8 +32,8 @@ class WST(ETC):
             throughput_system = str(throughput_system).upper()
         if throughput_system not in ('AR', 'GRINAR'):
             raise ValueError(
-                "throughput_system must be 'AR', 'GRINAR', or not specified"
-            )
+                "throughput_system must be 'AR', 'GRINAR', or not specified")
+        
         self.throughput_system = throughput_system
         self.throughput_dir = os.path.join(WSTDIR, throughput_system)
         
@@ -281,11 +281,14 @@ class WST(ETC):
         # Load sky and throughput data for all channels if skip_dataload is False
         family_names = ['ifs', 'moslr', 'moshr']
         if not skip_dataload:
+            sky_data = ETC.read_sky_files(SKYDIR)
+
             for family_name in family_names:
                 family = getattr(self, family_name)
 
                 for channel in family['channels']:
-                    get_data(family, channel, family_name, SKYDIR, self.throughput_dir)
+                    ETC.get_data(family, channel, family_name, SKYDIR,
+                                 self.throughput_dir, sky_data=sky_data)
     
         return None
         
