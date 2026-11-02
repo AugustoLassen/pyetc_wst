@@ -381,7 +381,7 @@ class ETC:
         skydir : str
             directory path where the sky fits file can be found
         """
-        # Retrive list of .FITS files from provided sky dir
+        # Retrieve list of .FITS files from provided sky dir
         flist = sorted(glob.glob(os.path.join(skydir, "*.fits")))
         if not flist:
             raise FileNotFoundError(f"No sky fits files found in {skydir}")
